@@ -1,38 +1,21 @@
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/Home";
+import LoginPage from "./pages/Login";
+import MainPage from "./pages/Main";
+import RegisterPage from "./pages/Register";
 
 const App: React.FC = (): JSX.Element => {
-
-  const navToMainApp = () => {}
-  const navToLoginPage = () => {}
-  const navToRegisterPage = () => {}
-
   return (
-    <>
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="text">
-        TIKA AI Notetaker
-      </div>
-      <div className="actions">
-        <div className="action">
-          <span onClick={navToMainApp}>
-            Dev
-          </span>
-        </div>
-        <div className="action">
-          <span onClick={navToLoginPage}>
-            Login
-          </span>
-        </div>
-        <div className="action">
-          <span onClick={navToRegisterPage}>
-            Register
-          </span>
-        </div>
-      </div>
-      <Versions></Versions>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
