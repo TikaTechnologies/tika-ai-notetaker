@@ -1,6 +1,15 @@
 # tika-ai-notetaker
 
-An Electron application with React and TypeScript
+Modern AI-powered transcription & note-taking desktop app.
+Electron application built with React and TypeScript.
+
+## Features  
+✔️ AI-powered transcription with Whisper API 
+✔️ Markdown-based note editor with real-time rendering  
+✔️ AI-assisted autocomplete and summarization  
+✔️ Configurable hotkeys & user preferences  
+✔️ Local-first storage with auto-save and recovery  
+✔️ Cross-platform (Planned: Windows, macOS, Linux) 
 
 ## Recommended IDE Setup
 
@@ -8,7 +17,21 @@ An Electron application with React and TypeScript
 
 ## Project Setup
 
-### Install
+### Installation  
+
+### Prerequisites  
+- Node.js (Latest LTS recommended)  
+- Yarn
+- Git  
+
+### Setup  
+```bash
+$ git clone https://github.com/Yenis/tika-ai-notetaker.git 
+```
+
+```bash
+$ cd tika-ai-notetaker 
+```
 
 ```bash
 $ yarn
