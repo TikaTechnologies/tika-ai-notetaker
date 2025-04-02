@@ -1,19 +1,17 @@
-import Versions from '../../components/Versions'
 import electronLogo from '../../assets/electron.svg'
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router'
 
 const HomePage: React.FC = (): JSX.Element => {
-
   const navigate = useNavigate()
 
   const navToMainApp = () => {
-    navigate("/main")
+    navigate('/main')
   }
   const navToLoginPage = () => {
-    navigate("/login")
+    navigate('/login')
   }
   const navToRegisterPage = () => {
-    navigate("/register")
+    navigate('/register')
   }
 
   return (
@@ -31,7 +29,6 @@ const HomePage: React.FC = (): JSX.Element => {
           <span onClick={navToRegisterPage}>Register</span>
         </div>
       </div>
-      <Versions></Versions>
     </>
   )
 }
