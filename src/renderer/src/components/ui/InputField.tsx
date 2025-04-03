@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { Input, InputAdornment, IconButton } from '@mui/material'
+import { Input, InputAdornment, IconButton, OutlinedInput } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
@@ -35,15 +35,16 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
       event.preventDefault()
     }
     return (
-      <InputContainer>
+      <InputContainer className="w-screen">
         {labelTextDisplayed ? <InputLabel htmlFor={id}>{labelText}</InputLabel> : ''}
         {type === 'password' ? (
-          <Input id={id} ref={ref} type={showPassword ? type : 'text'}></Input>
-        ) : (
-          <Input
+          <OutlinedInput
+            sx={{
+              height: '2rem',
+              width: '75%'
+            }}
             id={id}
-            ref={ref}
-            type={type}
+            type={showPassword ? 'text' : type}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -57,7 +58,17 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
                 </IconButton>
               </InputAdornment>
             }
-          ></Input>
+          ></OutlinedInput>
+        ) : (
+          <OutlinedInput
+            id={id}
+            inputRef={ref}
+            type={type}
+            sx={{
+              height: '2rem',
+              width: '75%'
+            }}
+          ></OutlinedInput>
         )}
       </InputContainer>
     )
