@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import electronLogo from '../../assets/electron.svg'
 import { useNavigate } from 'react-router'
-import Input from '@renderer/components/ui/Input'
+import Input from '@renderer/components/ui/InputField'
 
 const LoginPage: React.FC = (): JSX.Element => {
   const navigate = useNavigate()
@@ -23,7 +23,7 @@ const LoginPage: React.FC = (): JSX.Element => {
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="text">Login</div>
       <div className="flex flex-col">
-        <label htmlFor="user_email">Email</label>
+        {/* <label htmlFor="user_email">Email</label>
         <input
           type="email"
           className="border border-white focus:border-red-500"
@@ -35,9 +35,21 @@ const LoginPage: React.FC = (): JSX.Element => {
           type="password"
           className="border border-white  focus:border-red-500"
           id="user_password"
-        />
+        /> */}
+        <Input
+          type="email"
+          labelTextDisplayed={true}
+          labelText="Email"
+          id="user_email"
+          ref={emailInputRef}
+        ></Input>
+        <Input
+          type="password"
+          labelTextDisplayed={true}
+          labelText="Password"
+          id="user_password"
+        ></Input>
       </div>
-      <Input></Input>
       <div className="actions">
         <div className="action">
           <span onClick={navToHomePage}>Return</span>
