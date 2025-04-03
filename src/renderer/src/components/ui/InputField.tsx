@@ -20,10 +20,11 @@ interface InputProps {
   labelText: string
   id: string
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
 const InputField = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ type, labelTextDisplayed, labelText, id, handleChange }, ref) => {
+  ({ type, labelTextDisplayed, labelText, id, handleChange, onKeyDown }, ref) => {
     const [showPassword, setShowPassword] = useState(false)
 
     const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -69,6 +70,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
               placeholder: `Enter ${type}` // Example placeholder text
             }}
             onChange={handleChange}
+            onKeyDown={onKeyDown}
           ></OutlinedInput>
         ) : (
           <OutlinedInput
@@ -88,6 +90,7 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
               placeholder: `Enter ${type}` // Example placeholder text
             }}
             onChange={handleChange}
+            onKeyDown={onKeyDown}
           ></OutlinedInput>
         )}
       </InputContainer>
