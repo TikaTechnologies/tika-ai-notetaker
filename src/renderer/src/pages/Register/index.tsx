@@ -14,7 +14,7 @@ const RegisterPage: React.FC = (): JSX.Element => {
     <>
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="text">Register Page</div>
-      <Input type="email" placeholder="Email" />
+      <Input variant="primary" type="email" placeholder="Email" />
       <div className="actions">
         <div className="action">
           <span onClick={navToHomePage}>Return</span>
