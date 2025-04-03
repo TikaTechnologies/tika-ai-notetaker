@@ -1,4 +1,3 @@
-import Versions from '../../components/Versions'
 import electronLogo from '../../assets/electron.svg'
 import { useNavigate } from 'react-router';
 
@@ -31,7 +30,6 @@ const HomePage: React.FC = (): JSX.Element => {
           <span onClick={navToRegisterPage}>Register</span>
         </div>
       </div>
-      <Versions></Versions>
     </>
   )
 }
