@@ -1,7 +1,7 @@
 import Versions from '../../components/Versions'
 import electronLogo from '../../assets/electron.svg'
 import { useNavigate } from 'react-router'
-import { Input } from '@/components/ui/input'
+import { Input } from '@renderer/components/ui/input'
 
 const RegisterPage: React.FC = (): JSX.Element => {
   const navigate = useNavigate()

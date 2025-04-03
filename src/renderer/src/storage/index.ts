@@ -8,7 +8,7 @@ const ObjectStore = {
 
 type StoreName = keyof typeof ObjectStore
 
-class AppStorage {
+class Storage {
   private dbPromise: Promise<IDBPDatabase>
 
   constructor() {
@@ -80,4 +80,6 @@ class AppStorage {
   }
 }
 
-export default new AppStorage()
+const AppStorage = new Storage()
+
+export default AppStorage
