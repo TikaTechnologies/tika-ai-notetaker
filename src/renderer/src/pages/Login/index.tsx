@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react'
 import electronLogo from '../../assets/electron.svg'
 import { useNavigate } from 'react-router'
+import Input from '@renderer/components/ui/Input'
 
 const LoginPage: React.FC = (): JSX.Element => {
   const navigate = useNavigate()
@@ -36,6 +37,7 @@ const LoginPage: React.FC = (): JSX.Element => {
           id="user_password"
         />
       </div>
+      <Input></Input>
       <div className="actions">
         <div className="action">
           <span onClick={navToHomePage}>Return</span>
