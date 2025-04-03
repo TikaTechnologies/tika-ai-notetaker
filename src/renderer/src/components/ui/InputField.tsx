@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { Input, InputAdornment, IconButton, OutlinedInput } from '@mui/material'
+import { InputAdornment, IconButton, OutlinedInput } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
@@ -19,10 +19,11 @@ interface InputProps {
   labelTextDisplayed: boolean
   labelText: string
   id: string
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const InputField = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ type, labelTextDisplayed, labelText, id }, ref) => {
+  ({ type, labelTextDisplayed, labelText, id, handleChange }, ref) => {
     const [showPassword, setShowPassword] = useState(false)
 
     const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -41,7 +42,9 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
           <OutlinedInput
             sx={{
               height: '2rem',
-              width: '75%'
+              width: '75%',
+              backgroundColor: 'gray',
+              color: 'white'
             }}
             id={id}
             type={showPassword ? 'text' : type}
@@ -58,6 +61,14 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
                 </IconButton>
               </InputAdornment>
             }
+            inputProps={{
+              style: {
+                color: 'lightgray',
+                fontSize: '1rem' // Placeholder text color
+              },
+              placeholder: `Enter ${type}` // Example placeholder text
+            }}
+            onChange={handleChange}
           ></OutlinedInput>
         ) : (
           <OutlinedInput
@@ -66,8 +77,17 @@ const InputField = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             sx={{
               height: '2rem',
-              width: '75%'
+              width: '75%',
+              backgroundColor: 'gray',
+              color: 'white'
             }}
+            inputProps={{
+              style: {
+                color: 'lightgray' // Placeholder text color
+              },
+              placeholder: `Enter ${type}` // Example placeholder text
+            }}
+            onChange={handleChange}
           ></OutlinedInput>
         )}
       </InputContainer>
