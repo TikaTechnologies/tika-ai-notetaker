@@ -8,7 +8,8 @@ import {
   NavigateFunction,
   Params
 } from 'react-router-dom'
-import PageMap, { BasePageProps, OpenPage } from '@renderer/pages/Internal'
+import InternalRouter, { BasePageProps, OpenPage } from '@renderer/pages/Internal'
+import ModalEngine, { ModalProps, ModalState, ModalsMap } from '@renderer/modals'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
 
@@ -25,6 +26,7 @@ export interface GatewayState {
   isLoading: boolean
   isLoggedIn: boolean
   openPage: OpenPage
+  modal: ModalState<keyof ModalProps>
 }
 export interface GatewayIndex {
   pageIndex: number
@@ -45,7 +47,6 @@ function withRouter<P>(Component: React.ComponentType<P & RouterProps>): React.F
 }
 
 class MainPage extends React.Component<GatewayProps, GatewayState> {
-
   public static getDerivedStateFromError(error: Error) {
     console.warn(error)
     return { appHasError: true, error }
@@ -57,7 +58,12 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
       error: null,
       isLoading: true,
       isLoggedIn: false,
-      openPage: this.getEntryRouteState().openPage
+      openPage: this.getEntryRouteState().openPage,
+      modal: {
+        open: false,
+        name: undefined,
+        props: undefined
+      }
     }
   }
   private getEntryRouteState = (): GatewayUrlState => ({
@@ -66,19 +72,51 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
       routeData: {}
     }
   })
-  private updateGatewayState = (payload: GatewayUrlState) => {
+  private updateRouterState = (payload: GatewayUrlState) => {
     this.setState(payload)
   }
   public openPage = (payload: OpenPage) => {
-    this.updateGatewayState({ openPage: payload })
+    this.updateRouterState({ openPage: payload })
+  }
+  public openModal = <T extends keyof typeof ModalsMap>(name: T, props?: ModalProps[T]) => {
+    this.setState({
+      modal: { open: true, name, props }
+    })
+  }
+  public closeModal = () => {
+    this.setState({
+      modal: { open: false, name: undefined, props: undefined }
+    })
+  }
+  private onModalConfirm = (data: any) => {
+    if (
+      this.state.modal.props?.onModalConfirm &&
+      _.isFunction(this.state.modal.props.onModalConfirm)
+    ) {
+      this.state.modal.props.onModalConfirm(data)
+    }
+  }
+  private onModalClose = (data: any) => {
+    if (this.state.modal.props?.onModalClose && _.isFunction(this.state.modal.props.onModalClose)) {
+      this.state.modal.props.onModalClose(data)
+    }
   }
   public render = () => {
     const Page: React.FC<BasePageProps> | React.ComponentClass<BasePageProps> =
-      PageMap[this.state.openPage.route]
+      InternalRouter[this.state.openPage.route]
     return (
       <React.Suspense fallback={<div className="suspense-loading">Loading...</div>}>
         <div>
           <CssBaseline />
+          <ModalEngine
+            open={this.state.modal.open}
+            name={this.state.modal.name}
+            props={this.state.modal.props}
+            payload={this.state.modal.props?.payload}
+            onModalConfirm={this.onModalConfirm}
+            onModalClose={this.onModalClose}
+            close={this.closeModal}
+          />
           {/* <AppHeader /> */}
           {/* <AppDrawer /> */}
           <Box
@@ -95,19 +133,13 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
               p: 3
             }}
           >
-            <main
-              style={{
-                width: '100%',
-                height: '100%',
-                minWidth: 800
-              }}
-            >
-              <Page
-                route={this.state.openPage.route}
-                routeData={this.state.openPage.routeData}
-                openPage={this.openPage}
-              />
-            </main>
+            <Page
+              route={this.state.openPage.route}
+              routeData={this.state.openPage.routeData}
+              openPage={this.openPage}
+              openModal={this.openModal}
+              closeModal={this.closeModal}
+            />
           </Box>
         </div>
       </React.Suspense>

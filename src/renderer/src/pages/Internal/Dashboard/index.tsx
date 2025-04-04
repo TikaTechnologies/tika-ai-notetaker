@@ -13,6 +13,14 @@ const DashboardPage: React.FC<BasePageProps> = (props): JSX.Element => {
     props.openPage({ route: "Settings", routeData: {} })
   }
 
+  const testModal = () => {
+    props.openModal("ConfirmModal", {
+        payload: {
+            message: "Test message for confirmaton modal"
+        }
+    })
+  }
+
   return (
     <Flex col fullHeight fullWidth align='center'>
       <img alt="logo" className="logo" src={electronLogo} />
@@ -21,6 +29,7 @@ const DashboardPage: React.FC<BasePageProps> = (props): JSX.Element => {
         <Flex col gap={20}>
           <Button variant='outlined' onClick={navToNotePage}>Note Page</Button>
           <Button variant='outlined' onClick={navToSettingsPage}>Settings Page</Button>
+          <Button onClick={testModal}>Test modal</Button>
         </Flex>
       </Flex>
     </Flex>
