@@ -96,11 +96,6 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
       this.state.modal.props.onModalConfirm(data)
     }
   }
-  private onModalClose = (data: any) => {
-    if (this.state.modal.props?.onModalClose && _.isFunction(this.state.modal.props.onModalClose)) {
-      this.state.modal.props.onModalClose(data)
-    }
-  }
   public render = () => {
     const Page: React.FC<BasePageProps> | React.ComponentClass<BasePageProps> =
       InternalRouter[this.state.openPage.route]
@@ -114,7 +109,6 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
             props={this.state.modal.props}
             payload={this.state.modal.props?.payload}
             onModalConfirm={this.onModalConfirm}
-            onModalClose={this.onModalClose}
             close={this.closeModal}
           />
           {/* <AppHeader /> */}

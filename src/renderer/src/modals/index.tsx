@@ -5,7 +5,6 @@ import { DeleteModal, DeleteModalProps } from "./Delete";
 export interface BaseModalProps<T = any, K = any> {
   payload: T;
   onModalConfirm: (state?: K) => void;
-  onModalClose: (state?: K) => void;
   close: () => void;
 }
 
