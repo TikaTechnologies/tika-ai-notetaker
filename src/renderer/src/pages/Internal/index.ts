@@ -24,7 +24,6 @@ export interface BasePageProps<T extends OpenPage = OpenPage> {
     name: T,
     props?: ModalProps[T]
   ) => void;
-  closeModal: () => void;
 }
 
 export default InternalRouter

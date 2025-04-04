@@ -13,14 +13,13 @@ import ModalEngine, { ModalProps, ModalState, ModalsMap } from '@renderer/modals
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
 
-type RouterProps = {
+type InternalRouterProps = {
   location: Location
   navigate: NavigateFunction
   params: Readonly<Params>
 }
 
-interface GatewayProps extends RouterProps {}
-export interface GatewayState {
+export interface InternalRouterState {
   appHasError: boolean
   error: Error | null
   isLoading: boolean
@@ -28,15 +27,8 @@ export interface GatewayState {
   openPage: OpenPage
   modal: ModalState<keyof ModalProps>
 }
-export interface GatewayIndex {
-  pageIndex: number
-  tabIndex: number
-}
-interface GatewayUrlState {
-  openPage: OpenPage
-}
 
-function withRouter<P>(Component: React.ComponentType<P & RouterProps>): React.FC<P> {
+function withRouter<P>(Component: React.ComponentType<P & InternalRouterProps>): React.FC<P> {
   const ComponentWithRouterProps = (props: P) => {
     const location = useLocation()
     const navigate = useNavigate()
@@ -46,12 +38,12 @@ function withRouter<P>(Component: React.ComponentType<P & RouterProps>): React.F
   return ComponentWithRouterProps
 }
 
-class MainPage extends React.Component<GatewayProps, GatewayState> {
+class MainPage extends React.Component<InternalRouterProps, InternalRouterState> {
   public static getDerivedStateFromError(error: Error) {
     console.warn(error)
     return { appHasError: true, error }
   }
-  constructor(props: GatewayProps) {
+  constructor(props: InternalRouterProps) {
     super(props)
     this.state = {
       appHasError: false,
@@ -66,13 +58,13 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
       }
     }
   }
-  private getEntryRouteState = (): GatewayUrlState => ({
+  private getEntryRouteState = (): Pick<InternalRouterState, "openPage"> => ({
     openPage: {
       route: 'Dashboard',
       routeData: {}
     }
   })
-  private updateRouterState = (payload: GatewayUrlState) => {
+  private updateRouterState = (payload: Pick<InternalRouterState, "openPage">) => {
     this.setState(payload)
   }
   public openPage = (payload: OpenPage) => {
@@ -119,9 +111,9 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
               display: 'flex',
               flexGrow: 1,
               position: 'absolute',
-              left: 0, // this.state.drawerOpen ? drawerWidth : closedWidth,
+              left: 0, // closedDrawerWidth
               transition: 'left 0.25s ease',
-              top: '68px',
+              top: 0, // header height
               bottom: 0,
               right: 0,
               p: 3
@@ -132,7 +124,6 @@ class MainPage extends React.Component<GatewayProps, GatewayState> {
               routeData={this.state.openPage.routeData}
               openPage={this.openPage}
               openModal={this.openModal}
-              closeModal={this.closeModal}
             />
           </Box>
         </div>
